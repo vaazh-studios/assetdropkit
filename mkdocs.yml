@@ -1,0 +1,25 @@
+site_name: AssetDropKit
+site_url: https://vaazh-studios.github.io/assetdropkit/
+repo_url: https://github.com/vaazh-studios/assetdropkit
+repo_name: vaazh-studios/assetdropkit
+edit_uri: edit/main/docs/
+docs_dir: docs
+copyright: 'Built for <a href="https://vocabloot.com">Vocabloot</a>, the photo vocabulary app. Apache 2.0.'
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep orange
+      toggle: { icon: material/brightness-7, name: Dark }
+    - scheme: slate
+      primary: deep orange
+      toggle: { icon: material/brightness-4, name: Light }
+  features: [navigation.sections, navigation.top, content.code.copy, search.suggest]
+markdown_extensions:
+  - admonition
+  - tables
+  - pymdownx.superfences
+  - pymdownx.highlight
+  - toc: { permalink: true }
+nav:
+  - Home: index.md

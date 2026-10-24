@@ -1,0 +1,15 @@
+.gradle/
+build/
+*/build/
+.idea/
+.kotlin/
+local.properties
+*.iml
+.DS_Store
+xcuserdata/
+sample/iosApp/iosApp.xcodeproj/project.xcworkspace/
+sample/iosApp/iosApp.xcodeproj/xcuserdata/
+site/
+.swiftpm/
+.build/
+Package.resolved
