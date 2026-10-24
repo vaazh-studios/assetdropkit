@@ -21,6 +21,11 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.highlight
   - toc: { permalink: true }
+  - attr_list
 nav:
   - Home: index.md
+  - Android: android.md
+  - iOS: ios.md
   - Packaging: packaging.md
+  - Testing: testing.md
+  - Limits: limits.md
