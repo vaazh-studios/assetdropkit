@@ -16,7 +16,7 @@ kotlin {
     explicitApi()
     applyDefaultHierarchyTemplate()
 
-    androidLibrary {
+    android {
         namespace = "com.vocabloot.assetdropkit"
         compileSdk = 36
         minSdk = 24
@@ -40,6 +40,7 @@ kotlin {
         }
         androidMain.dependencies {
             api(libs.play.asset.delivery.ktx)
+            api(libs.androidx.activity)
         }
     }
 }

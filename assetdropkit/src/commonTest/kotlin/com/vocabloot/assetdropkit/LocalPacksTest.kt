@@ -1,5 +1,6 @@
 package com.vocabloot.assetdropkit
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.toList
@@ -20,6 +21,7 @@ import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 /** Debug builds and tests read packs straight from `packs/` on disk, with a simulated download. */
+@OptIn(ExperimentalCoroutinesApi::class)
 class LocalPacksTest {
 
     private val root = Path(SystemTemporaryDirectory, "assetdropkit-${Random.nextLong().toULong()}")

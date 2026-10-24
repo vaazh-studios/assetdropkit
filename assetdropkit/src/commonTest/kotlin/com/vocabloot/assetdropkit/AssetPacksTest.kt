@@ -1,6 +1,7 @@
 package com.vocabloot.assetdropkit
 
 import com.vocabloot.assetdropkit.test.FakePackSource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.first
@@ -17,6 +18,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class AssetPacksTest {
 
     private val files = mapOf("town/a.glb" to byteArrayOf(1, 2, 3), "town/b.png" to byteArrayOf(4, 5))

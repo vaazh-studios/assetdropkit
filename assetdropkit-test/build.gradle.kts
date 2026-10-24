@@ -15,7 +15,7 @@ kotlin {
     explicitApi()
     applyDefaultHierarchyTemplate()
 
-    androidLibrary {
+    android {
         namespace = "com.vocabloot.assetdropkit.test"
         compileSdk = 36
         minSdk = 24

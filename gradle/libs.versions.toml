@@ -18,6 +18,7 @@ serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializ
 kotlinx-io-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinxIo" }
 play-asset-delivery-ktx = { group = "com.google.android.play", name = "asset-delivery-ktx", version.ref = "playAssetDelivery" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidActivity" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidActivity" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
