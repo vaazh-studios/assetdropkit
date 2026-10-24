@@ -15,3 +15,5 @@ site/
 Package.resolved
 sample/packs/*.aar
 __pycache__/
+sample/iosApp/iosApp.xcodeproj/project.xcworkspace/
+sample/iosApp/iosApp.xcodeproj/xcuserdata/

@@ -10,6 +10,7 @@ bcv = "0.18.1"
 dokka = "2.1.0"
 composeMultiplatform = "1.10.3"
 androidActivity = "1.13.0"
+bundletool = "1.18.3"
 
 [libraries]
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -18,6 +19,8 @@ serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serializ
 kotlinx-io-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-io-core", version.ref = "kotlinxIo" }
 play-asset-delivery-ktx = { group = "com.google.android.play", name = "asset-delivery-ktx", version.ref = "playAssetDelivery" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "androidActivity" }
+compose-components-resources = { group = "org.jetbrains.compose.components", name = "components-resources", version.ref = "composeMultiplatform" }
+bundletool = { group = "com.android.tools.build", name = "bundletool", version.ref = "bundletool" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "androidActivity" }
 
 [plugins]
@@ -25,6 +28,7 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 android-kmp-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-asset-pack = { id = "com.android.asset-pack", version.ref = "agp" }
 jetbrains-compose = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "mavenPublish" }

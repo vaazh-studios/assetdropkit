@@ -1,6 +1,7 @@
 {
   "files": {
-    "hello.txt": "bf9ef686e7cda15a812b3e767f99db67b24cbb453a2992a1427ccc772aa7e46a"
+    "hello.txt": "bf9ef686e7cda15a812b3e767f99db67b24cbb453a2992a1427ccc772aa7e46a",
+    "image.png": "0ed61f6797de5af605e9e2cb9accc7c54f3d4af4eaf2d31aa5fa58764e8b3793"
   },
   "packId": "demo",
   "version": 1

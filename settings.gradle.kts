@@ -17,3 +17,6 @@ dependencyResolutionManagement {
 
 include(":assetdropkit")
 include(":assetdropkit-test")
+include(":sample:shared")
+include(":sample:androidApp")
+include(":sample:demo-pack")

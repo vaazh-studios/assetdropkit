@@ -19,3 +19,7 @@ jobs:
         run: |
           SIM=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; print(next(x['udid'] for k,v in d.items() if 'iOS' in k for x in v if x['name'].startswith('iPhone')))")
           xcodebuild test -scheme AssetDropKit -destination "id=$SIM" -quiet
+      - name: Sample Android
+        run: ./gradlew :sample:androidApp:assembleDebug :sample:androidApp:bundleDebug --no-daemon
+      - name: Packaging script tests
+        run: python3 -I scripts/test/test_write_pack_manifest.py
