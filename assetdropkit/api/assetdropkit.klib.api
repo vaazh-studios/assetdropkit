@@ -22,6 +22,25 @@ final enum class com.vocabloot.assetdropkit/PackFailure : kotlin/Enum<com.vocabl
     final fun values(): kotlin/Array<com.vocabloot.assetdropkit/PackFailure> // com.vocabloot.assetdropkit/PackFailure.values|values#static(){}[0]
 }
 
+abstract interface com.vocabloot.assetdropkit/ApplePackCallbacks { // com.vocabloot.assetdropkit/ApplePackCallbacks|null[0]
+    abstract fun onFailed(com.vocabloot.assetdropkit/PackFailure, kotlin/String?) // com.vocabloot.assetdropkit/ApplePackCallbacks.onFailed|onFailed(com.vocabloot.assetdropkit.PackFailure;kotlin.String?){}[0]
+    abstract fun onFinished() // com.vocabloot.assetdropkit/ApplePackCallbacks.onFinished|onFinished(){}[0]
+    abstract fun onNotDownloaded() // com.vocabloot.assetdropkit/ApplePackCallbacks.onNotDownloaded|onNotDownloaded(){}[0]
+    abstract fun onPending() // com.vocabloot.assetdropkit/ApplePackCallbacks.onPending|onPending(){}[0]
+    abstract fun onProgress(kotlin/Long, kotlin/Long) // com.vocabloot.assetdropkit/ApplePackCallbacks.onProgress|onProgress(kotlin.Long;kotlin.Long){}[0]
+}
+
+abstract interface com.vocabloot.assetdropkit/ApplePackStore { // com.vocabloot.assetdropkit/ApplePackStore|null[0]
+    abstract fun fetch(kotlin/String, com.vocabloot.assetdropkit/ApplePackCallbacks): com.vocabloot.assetdropkit/PackCancel // com.vocabloot.assetdropkit/ApplePackStore.fetch|fetch(kotlin.String;com.vocabloot.assetdropkit.ApplePackCallbacks){}[0]
+    abstract fun readBytes(kotlin/String, kotlin/String): platform.Foundation/NSData? // com.vocabloot.assetdropkit/ApplePackStore.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
+    abstract fun remove(kotlin/String) // com.vocabloot.assetdropkit/ApplePackStore.remove|remove(kotlin.String){}[0]
+    abstract fun status(kotlin/String, com.vocabloot.assetdropkit/ApplePackCallbacks) // com.vocabloot.assetdropkit/ApplePackStore.status|status(kotlin.String;com.vocabloot.assetdropkit.ApplePackCallbacks){}[0]
+}
+
+abstract interface com.vocabloot.assetdropkit/PackCancel { // com.vocabloot.assetdropkit/PackCancel|null[0]
+    abstract fun cancel() // com.vocabloot.assetdropkit/PackCancel.cancel|cancel(){}[0]
+}
+
 abstract interface com.vocabloot.assetdropkit/PackSource { // com.vocabloot.assetdropkit/PackSource|null[0]
     abstract fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit/PackSource.state|state(kotlin.String){}[0]
     abstract suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit/PackSource.fetch|fetch(kotlin.String){}[0]
@@ -102,6 +121,15 @@ sealed interface com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdr
         final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.WaitingForWifi.hashCode|hashCode(){}[0]
         final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.WaitingForWifi.toString|toString(){}[0]
     }
+}
+
+final class com.vocabloot.assetdropkit/AppleStoreSource : com.vocabloot.assetdropkit/PackSource { // com.vocabloot.assetdropkit/AppleStoreSource|null[0]
+    constructor <init>(com.vocabloot.assetdropkit/ApplePackStore, kotlinx.coroutines/CoroutineDispatcher = ...) // com.vocabloot.assetdropkit/AppleStoreSource.<init>|<init>(com.vocabloot.assetdropkit.ApplePackStore;kotlinx.coroutines.CoroutineDispatcher){}[0]
+
+    final fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit/AppleStoreSource.state|state(kotlin.String){}[0]
+    final suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit/AppleStoreSource.fetch|fetch(kotlin.String){}[0]
+    final suspend fun readBytes(kotlin/String, kotlin/String): kotlin/ByteArray? // com.vocabloot.assetdropkit/AppleStoreSource.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
+    final suspend fun remove(kotlin/String) // com.vocabloot.assetdropkit/AppleStoreSource.remove|remove(kotlin.String){}[0]
 }
 
 final class com.vocabloot.assetdropkit/AssetPacks { // com.vocabloot.assetdropkit/AssetPacks|null[0]
