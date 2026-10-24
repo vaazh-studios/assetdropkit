@@ -153,7 +153,7 @@ class PlayAssetPacksTest {
     fun aReleaseSourceNeverReadsLocalFiles() {
         val local = LocalPacks(root = Path("packs"))
         val play = PlayAssetPacks(FakePlay())
-        assertSame(play, PackSources.choose(debug = false, local = { local }, play = { play }))
-        assertSame(local, PackSources.choose(debug = true, local = { local }, play = { play }))
+        assertSame(play, PackSources.choose(debug = false, bundled = { local }, play = { play }))
+        assertSame(local, PackSources.choose(debug = true, bundled = { local }, play = { play }))
     }
 }

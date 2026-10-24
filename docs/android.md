@@ -6,10 +6,17 @@
 val packs = AssetPacks(source = PlayAssetPacks(context))
 ```
 
-`PackSources.default(context, debug = BuildConfig.DEBUG, localRoot)` picks `LocalPacks` (files on
-the device, with an optional simulated delay and failure rate) in debug builds and Play
-otherwise. A release build never reads local files: a sideloaded release gets
-`NeedsPlayConfirmation`, not a silent fallback.
+`PackSources.default(context, debug = BuildConfig.DEBUG)` picks `BundledAssetPacks` in debug
+builds and Play otherwise. An APK installed with `installDebug` has no asset packs, so debug
+builds carry the pack as plain assets:
+
+```kotlin
+// app/build.gradle.kts
+android.sourceSets["debug"].assets.srcDir("../packs/postdelivery-play/src/main/assets")
+```
+
+A release build never reads bundled files: a sideloaded release gets `NeedsPlayConfirmation`,
+not a silent fallback.
 
 ## Play's prompts
 

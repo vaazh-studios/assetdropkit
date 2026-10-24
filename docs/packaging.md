@@ -46,8 +46,9 @@ android { assetPacks += listOf(":packs:postdelivery-play") }
 With that layout the scripts take the assets folder as `<packsDir>`:
 `write-pack-manifest.py packs/postdelivery-play/src/main/assets postdelivery --version 1`.
 
-Debug builds can read a copy of the folder on the device with `LocalPacks`
-(`PackSources.default(context, debug = true, localRoot)`). Release builds always go through Play.
+Debug APKs carry the same folder as plain assets (`android.sourceSets["debug"].assets.srcDir(...)`)
+and read it with `BundledAssetPacks`, picked by `PackSources.default(context, debug = true)`.
+Release builds always go through Play.
 
 ## 3. iOS 17 and 18: On-Demand Resources
 
