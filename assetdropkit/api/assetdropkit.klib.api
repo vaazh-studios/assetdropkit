@@ -1,0 +1,177 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.vocabloot:assetdropkit>
+final enum class com.vocabloot.assetdropkit/PackFailure : kotlin/Enum<com.vocabloot.assetdropkit/PackFailure> { // com.vocabloot.assetdropkit/PackFailure|null[0]
+    enum entry Cancelled // com.vocabloot.assetdropkit/PackFailure.Cancelled|null[0]
+    enum entry Corrupt // com.vocabloot.assetdropkit/PackFailure.Corrupt|null[0]
+    enum entry InsufficientStorage // com.vocabloot.assetdropkit/PackFailure.InsufficientStorage|null[0]
+    enum entry NoNetwork // com.vocabloot.assetdropkit/PackFailure.NoNetwork|null[0]
+    enum entry NotFound // com.vocabloot.assetdropkit/PackFailure.NotFound|null[0]
+    enum entry StoreUnavailable // com.vocabloot.assetdropkit/PackFailure.StoreUnavailable|null[0]
+    enum entry Unknown // com.vocabloot.assetdropkit/PackFailure.Unknown|null[0]
+
+    final val entries // com.vocabloot.assetdropkit/PackFailure.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<com.vocabloot.assetdropkit/PackFailure> // com.vocabloot.assetdropkit/PackFailure.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): com.vocabloot.assetdropkit/PackFailure // com.vocabloot.assetdropkit/PackFailure.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<com.vocabloot.assetdropkit/PackFailure> // com.vocabloot.assetdropkit/PackFailure.values|values#static(){}[0]
+}
+
+abstract interface com.vocabloot.assetdropkit/PackSource { // com.vocabloot.assetdropkit/PackSource|null[0]
+    abstract fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit/PackSource.state|state(kotlin.String){}[0]
+    abstract suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit/PackSource.fetch|fetch(kotlin.String){}[0]
+    abstract suspend fun readBytes(kotlin/String, kotlin/String): kotlin/ByteArray? // com.vocabloot.assetdropkit/PackSource.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
+    abstract suspend fun remove(kotlin/String) // com.vocabloot.assetdropkit/PackSource.remove|remove(kotlin.String){}[0]
+}
+
+abstract interface com.vocabloot.assetdropkit/VerifiedMarkers { // com.vocabloot.assetdropkit/VerifiedMarkers|null[0]
+    abstract fun isVerified(kotlin/String, kotlin/Int): kotlin/Boolean // com.vocabloot.assetdropkit/VerifiedMarkers.isVerified|isVerified(kotlin.String;kotlin.Int){}[0]
+    abstract fun markVerified(kotlin/String, kotlin/Int) // com.vocabloot.assetdropkit/VerifiedMarkers.markVerified|markVerified(kotlin.String;kotlin.Int){}[0]
+}
+
+sealed interface com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState|null[0]
+    final class Downloading : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.Downloading|null[0]
+        constructor <init>(kotlin/Long, kotlin/Long?) // com.vocabloot.assetdropkit/PackState.Downloading.<init>|<init>(kotlin.Long;kotlin.Long?){}[0]
+
+        final val bytes // com.vocabloot.assetdropkit/PackState.Downloading.bytes|{}bytes[0]
+            final fun <get-bytes>(): kotlin/Long // com.vocabloot.assetdropkit/PackState.Downloading.bytes.<get-bytes>|<get-bytes>(){}[0]
+        final val totalBytes // com.vocabloot.assetdropkit/PackState.Downloading.totalBytes|{}totalBytes[0]
+            final fun <get-totalBytes>(): kotlin/Long? // com.vocabloot.assetdropkit/PackState.Downloading.totalBytes.<get-totalBytes>|<get-totalBytes>(){}[0]
+
+        final fun component1(): kotlin/Long // com.vocabloot.assetdropkit/PackState.Downloading.component1|component1(){}[0]
+        final fun component2(): kotlin/Long? // com.vocabloot.assetdropkit/PackState.Downloading.component2|component2(){}[0]
+        final fun copy(kotlin/Long = ..., kotlin/Long? = ...): com.vocabloot.assetdropkit/PackState.Downloading // com.vocabloot.assetdropkit/PackState.Downloading.copy|copy(kotlin.Long;kotlin.Long?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.Downloading.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.Downloading.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.Downloading.toString|toString(){}[0]
+    }
+
+    final class Failed : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.Failed|null[0]
+        constructor <init>(com.vocabloot.assetdropkit/PackFailure, kotlin/String?) // com.vocabloot.assetdropkit/PackState.Failed.<init>|<init>(com.vocabloot.assetdropkit.PackFailure;kotlin.String?){}[0]
+
+        final val detail // com.vocabloot.assetdropkit/PackState.Failed.detail|{}detail[0]
+            final fun <get-detail>(): kotlin/String? // com.vocabloot.assetdropkit/PackState.Failed.detail.<get-detail>|<get-detail>(){}[0]
+        final val reason // com.vocabloot.assetdropkit/PackState.Failed.reason|{}reason[0]
+            final fun <get-reason>(): com.vocabloot.assetdropkit/PackFailure // com.vocabloot.assetdropkit/PackState.Failed.reason.<get-reason>|<get-reason>(){}[0]
+
+        final fun component1(): com.vocabloot.assetdropkit/PackFailure // com.vocabloot.assetdropkit/PackState.Failed.component1|component1(){}[0]
+        final fun component2(): kotlin/String? // com.vocabloot.assetdropkit/PackState.Failed.component2|component2(){}[0]
+        final fun copy(com.vocabloot.assetdropkit/PackFailure = ..., kotlin/String? = ...): com.vocabloot.assetdropkit/PackState.Failed // com.vocabloot.assetdropkit/PackState.Failed.copy|copy(com.vocabloot.assetdropkit.PackFailure;kotlin.String?){}[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.Failed.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.Failed.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.Failed.toString|toString(){}[0]
+    }
+
+    final object NeedsPlayConfirmation : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.NeedsPlayConfirmation|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.NeedsPlayConfirmation.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.NeedsPlayConfirmation.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.NeedsPlayConfirmation.toString|toString(){}[0]
+    }
+
+    final object NotDownloaded : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.NotDownloaded|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.NotDownloaded.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.NotDownloaded.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.NotDownloaded.toString|toString(){}[0]
+    }
+
+    final object Pending : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.Pending|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.Pending.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.Pending.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.Pending.toString|toString(){}[0]
+    }
+
+    final object Ready : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.Ready|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.Ready.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.Ready.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.Ready.toString|toString(){}[0]
+    }
+
+    final object Transferring : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.Transferring|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.Transferring.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.Transferring.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.Transferring.toString|toString(){}[0]
+    }
+
+    final object WaitingForWifi : com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState.WaitingForWifi|null[0]
+        final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackState.WaitingForWifi.equals|equals(kotlin.Any?){}[0]
+        final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackState.WaitingForWifi.hashCode|hashCode(){}[0]
+        final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackState.WaitingForWifi.toString|toString(){}[0]
+    }
+}
+
+final class com.vocabloot.assetdropkit/AssetPacks { // com.vocabloot.assetdropkit/AssetPacks|null[0]
+    constructor <init>(com.vocabloot.assetdropkit/PackSource, kotlinx.coroutines/CoroutineDispatcher = ..., com.vocabloot.assetdropkit/VerifiedMarkers = ...) // com.vocabloot.assetdropkit/AssetPacks.<init>|<init>(com.vocabloot.assetdropkit.PackSource;kotlinx.coroutines.CoroutineDispatcher;com.vocabloot.assetdropkit.VerifiedMarkers){}[0]
+
+    final fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit/AssetPacks.state|state(kotlin.String){}[0]
+    final suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit/AssetPacks.fetch|fetch(kotlin.String){}[0]
+    final suspend fun readBytes(kotlin/String, kotlin/String): kotlin/ByteArray? // com.vocabloot.assetdropkit/AssetPacks.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
+    final suspend fun remove(kotlin/String) // com.vocabloot.assetdropkit/AssetPacks.remove|remove(kotlin.String){}[0]
+}
+
+final class com.vocabloot.assetdropkit/InMemoryVerifiedMarkers : com.vocabloot.assetdropkit/VerifiedMarkers { // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers|null[0]
+    constructor <init>() // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.<init>|<init>(){}[0]
+
+    final fun isVerified(kotlin/String, kotlin/Int): kotlin/Boolean // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.isVerified|isVerified(kotlin.String;kotlin.Int){}[0]
+    final fun markVerified(kotlin/String, kotlin/Int) // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.markVerified|markVerified(kotlin.String;kotlin.Int){}[0]
+}
+
+final class com.vocabloot.assetdropkit/LocalPacks : com.vocabloot.assetdropkit/PackSource { // com.vocabloot.assetdropkit/LocalPacks|null[0]
+    constructor <init>(kotlinx.io.files/Path, kotlin/Long = ..., kotlin/Int = ...) // com.vocabloot.assetdropkit/LocalPacks.<init>|<init>(kotlinx.io.files.Path;kotlin.Long;kotlin.Int){}[0]
+
+    final fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit/LocalPacks.state|state(kotlin.String){}[0]
+    final suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit/LocalPacks.fetch|fetch(kotlin.String){}[0]
+    final suspend fun readBytes(kotlin/String, kotlin/String): kotlin/ByteArray? // com.vocabloot.assetdropkit/LocalPacks.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
+    final suspend fun remove(kotlin/String) // com.vocabloot.assetdropkit/LocalPacks.remove|remove(kotlin.String){}[0]
+}
+
+final class com.vocabloot.assetdropkit/PackManifest { // com.vocabloot.assetdropkit/PackManifest|null[0]
+    constructor <init>(kotlin/String, kotlin/Int, kotlin.collections/Map<kotlin/String, kotlin/String>) // com.vocabloot.assetdropkit/PackManifest.<init>|<init>(kotlin.String;kotlin.Int;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+
+    final val files // com.vocabloot.assetdropkit/PackManifest.files|{}files[0]
+        final fun <get-files>(): kotlin.collections/Map<kotlin/String, kotlin/String> // com.vocabloot.assetdropkit/PackManifest.files.<get-files>|<get-files>(){}[0]
+    final val packId // com.vocabloot.assetdropkit/PackManifest.packId|{}packId[0]
+        final fun <get-packId>(): kotlin/String // com.vocabloot.assetdropkit/PackManifest.packId.<get-packId>|<get-packId>(){}[0]
+    final val version // com.vocabloot.assetdropkit/PackManifest.version|{}version[0]
+        final fun <get-version>(): kotlin/Int // com.vocabloot.assetdropkit/PackManifest.version.<get-version>|<get-version>(){}[0]
+
+    final fun component1(): kotlin/String // com.vocabloot.assetdropkit/PackManifest.component1|component1(){}[0]
+    final fun component2(): kotlin/Int // com.vocabloot.assetdropkit/PackManifest.component2|component2(){}[0]
+    final fun component3(): kotlin.collections/Map<kotlin/String, kotlin/String> // com.vocabloot.assetdropkit/PackManifest.component3|component3(){}[0]
+    final fun copy(kotlin/String = ..., kotlin/Int = ..., kotlin.collections/Map<kotlin/String, kotlin/String> = ...): com.vocabloot.assetdropkit/PackManifest // com.vocabloot.assetdropkit/PackManifest.copy|copy(kotlin.String;kotlin.Int;kotlin.collections.Map<kotlin.String,kotlin.String>){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.vocabloot.assetdropkit/PackManifest.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.vocabloot.assetdropkit/PackManifest.hashCode|hashCode(){}[0]
+    final fun toJson(): kotlin/String // com.vocabloot.assetdropkit/PackManifest.toJson|toJson(){}[0]
+    final fun toString(): kotlin/String // com.vocabloot.assetdropkit/PackManifest.toString|toString(){}[0]
+
+    final object $serializer : kotlinx.serialization.internal/GeneratedSerializer<com.vocabloot.assetdropkit/PackManifest> { // com.vocabloot.assetdropkit/PackManifest.$serializer|null[0]
+        final val descriptor // com.vocabloot.assetdropkit/PackManifest.$serializer.descriptor|{}descriptor[0]
+            final fun <get-descriptor>(): kotlinx.serialization.descriptors/SerialDescriptor // com.vocabloot.assetdropkit/PackManifest.$serializer.descriptor.<get-descriptor>|<get-descriptor>(){}[0]
+
+        final fun childSerializers(): kotlin/Array<kotlinx.serialization/KSerializer<*>> // com.vocabloot.assetdropkit/PackManifest.$serializer.childSerializers|childSerializers(){}[0]
+        final fun deserialize(kotlinx.serialization.encoding/Decoder): com.vocabloot.assetdropkit/PackManifest // com.vocabloot.assetdropkit/PackManifest.$serializer.deserialize|deserialize(kotlinx.serialization.encoding.Decoder){}[0]
+        final fun serialize(kotlinx.serialization.encoding/Encoder, com.vocabloot.assetdropkit/PackManifest) // com.vocabloot.assetdropkit/PackManifest.$serializer.serialize|serialize(kotlinx.serialization.encoding.Encoder;com.vocabloot.assetdropkit.PackManifest){}[0]
+    }
+
+    final object Companion { // com.vocabloot.assetdropkit/PackManifest.Companion|null[0]
+        final const val PATH // com.vocabloot.assetdropkit/PackManifest.Companion.PATH|{}PATH[0]
+            final fun <get-PATH>(): kotlin/String // com.vocabloot.assetdropkit/PackManifest.Companion.PATH.<get-PATH>|<get-PATH>(){}[0]
+
+        final val $childSerializers // com.vocabloot.assetdropkit/PackManifest.Companion.$childSerializers|{}$childSerializers[0]
+
+        final fun of(kotlin/String, kotlin/Int, kotlin.collections/Map<kotlin/String, kotlin/ByteArray>): com.vocabloot.assetdropkit/PackManifest // com.vocabloot.assetdropkit/PackManifest.Companion.of|of(kotlin.String;kotlin.Int;kotlin.collections.Map<kotlin.String,kotlin.ByteArray>){}[0]
+        final fun parse(kotlin/String): com.vocabloot.assetdropkit/PackManifest // com.vocabloot.assetdropkit/PackManifest.Companion.parse|parse(kotlin.String){}[0]
+        final fun serializer(): kotlinx.serialization/KSerializer<com.vocabloot.assetdropkit/PackManifest> // com.vocabloot.assetdropkit/PackManifest.Companion.serializer|serializer(){}[0]
+    }
+}
+
+final object com.vocabloot.assetdropkit/Sha256 { // com.vocabloot.assetdropkit/Sha256|null[0]
+    final fun hex(kotlin/ByteArray): kotlin/String // com.vocabloot.assetdropkit/Sha256.hex|hex(kotlin.ByteArray){}[0]
+}
+
+final val com.vocabloot.assetdropkit/isSettled // com.vocabloot.assetdropkit/isSettled|@com.vocabloot.assetdropkit.PackState{}isSettled[0]
+    final fun (com.vocabloot.assetdropkit/PackState).<get-isSettled>(): kotlin/Boolean // com.vocabloot.assetdropkit/isSettled.<get-isSettled>|<get-isSettled>@com.vocabloot.assetdropkit.PackState(){}[0]

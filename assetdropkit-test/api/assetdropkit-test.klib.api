@@ -1,0 +1,24 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <com.vocabloot:assetdropkit-test>
+final class com.vocabloot.assetdropkit.test/FakePackSource : com.vocabloot.assetdropkit/PackSource { // com.vocabloot.assetdropkit.test/FakePackSource|null[0]
+    constructor <init>(kotlin/Long = ...) // com.vocabloot.assetdropkit.test/FakePackSource.<init>|<init>(kotlin.Long){}[0]
+
+    final fun cancelCount(kotlin/String): kotlin/Int // com.vocabloot.assetdropkit.test/FakePackSource.cancelCount|cancelCount(kotlin.String){}[0]
+    final fun fetchCount(kotlin/String): kotlin/Int // com.vocabloot.assetdropkit.test/FakePackSource.fetchCount|fetchCount(kotlin.String){}[0]
+    final fun files(kotlin/String, kotlin.collections/Map<kotlin/String, kotlin/ByteArray>) // com.vocabloot.assetdropkit.test/FakePackSource.files|files(kotlin.String;kotlin.collections.Map<kotlin.String,kotlin.ByteArray>){}[0]
+    final fun pack(kotlin/String, kotlin/Int, kotlin.collections/Map<kotlin/String, kotlin/ByteArray>) // com.vocabloot.assetdropkit.test/FakePackSource.pack|pack(kotlin.String;kotlin.Int;kotlin.collections.Map<kotlin.String,kotlin.ByteArray>){}[0]
+    final fun readCount(kotlin/String): kotlin/Int // com.vocabloot.assetdropkit.test/FakePackSource.readCount|readCount(kotlin.String){}[0]
+    final fun removeCount(kotlin/String): kotlin/Int // com.vocabloot.assetdropkit.test/FakePackSource.removeCount|removeCount(kotlin.String){}[0]
+    final fun script(kotlin/String, kotlin/Array<out com.vocabloot.assetdropkit/PackState>...) // com.vocabloot.assetdropkit.test/FakePackSource.script|script(kotlin.String;kotlin.Array<out|com.vocabloot.assetdropkit.PackState>...){}[0]
+    final fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit.test/FakePackSource.state|state(kotlin.String){}[0]
+    final fun throwOnFetch(kotlin/String, kotlin/Exception) // com.vocabloot.assetdropkit.test/FakePackSource.throwOnFetch|throwOnFetch(kotlin.String;kotlin.Exception){}[0]
+    final suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit.test/FakePackSource.fetch|fetch(kotlin.String){}[0]
+    final suspend fun readBytes(kotlin/String, kotlin/String): kotlin/ByteArray? // com.vocabloot.assetdropkit.test/FakePackSource.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
+    final suspend fun remove(kotlin/String) // com.vocabloot.assetdropkit.test/FakePackSource.remove|remove(kotlin.String){}[0]
+}
