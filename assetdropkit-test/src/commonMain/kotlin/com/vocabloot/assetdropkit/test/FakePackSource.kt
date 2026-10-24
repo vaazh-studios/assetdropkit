@@ -25,6 +25,8 @@ public class FakePackSource(private val stepMillis: Long = 10) : PackSource {
     private val scripts = mutableMapOf<String, ArrayDeque<PackState>>()
     private val contents = mutableMapOf<String, Map<String, ByteArray>>()
     private val throwing = mutableMapOf<String, Exception>()
+    private val throwingReads = mutableMapOf<String, Exception>()
+    private val throwingRemoves = mutableMapOf<String, Exception>()
     private val fetches = mutableMapOf<String, Int>()
     private val reads = mutableMapOf<String, Int>()
     private val removes = mutableMapOf<String, Int>()
@@ -53,6 +55,16 @@ public class FakePackSource(private val stepMillis: Long = 10) : PackSource {
     /** Makes the next fetches of [packId] throw [error], like a store SDK crashing. */
     public fun throwOnFetch(packId: String, error: Exception) {
         throwing[packId] = error
+    }
+
+    /** Makes reads of [packId] throw [error], like a file system failing mid-read. */
+    public fun throwOnRead(packId: String, error: Exception) {
+        throwingReads[packId] = error
+    }
+
+    /** Makes removes of [packId] throw [error], like Play refusing a removal. */
+    public fun throwOnRemove(packId: String, error: Exception) {
+        throwingRemoves[packId] = error
     }
 
     public fun fetchCount(packId: String): Int = fetches[packId] ?: 0
@@ -91,11 +103,13 @@ public class FakePackSource(private val stepMillis: Long = 10) : PackSource {
     override suspend fun readBytes(packId: String, path: String): ByteArray? {
         if (flow(packId).value != PackState.Ready) return null
         reads[packId] = readCount(packId) + 1
+        throwingReads[packId]?.let { throw it }
         return contents[packId]?.get(path)?.copyOf()
     }
 
     override suspend fun remove(packId: String) {
         removes[packId] = removeCount(packId) + 1
+        throwingRemoves[packId]?.let { throw it }
         flow(packId).value = PackState.NotDownloaded
     }
 }

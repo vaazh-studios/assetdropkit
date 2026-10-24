@@ -67,6 +67,8 @@ actor OnDemandResourcesSource: ApplePackSource {
     }
 
     func remove(_ id: String) async {
+        // A download still running would otherwise hold the pack again when it finishes.
+        inFlight.removeValue(forKey: id)?.cancel()
         held.removeValue(forKey: id)?.end()
         requests.setPreservationPriority(0, tag: id)
         publish(id, .notDownloaded)

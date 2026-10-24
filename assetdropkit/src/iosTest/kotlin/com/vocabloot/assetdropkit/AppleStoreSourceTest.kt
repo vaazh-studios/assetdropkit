@@ -6,6 +6,7 @@ import kotlinx.cinterop.addressOf
 import kotlinx.cinterop.convert
 import kotlinx.cinterop.usePinned
 import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.first
@@ -39,6 +40,7 @@ class AppleStoreSourceTest {
         var data: NSData? = null
         var cancels = 0
         var removes = 0
+        var onRemove: (ApplePackCallbacks) -> Unit = { it.onFinished() }
         val fetched = CompletableDeferred<ApplePackCallbacks>()
 
         override fun fetch(packId: String, callbacks: ApplePackCallbacks): PackCancel {
@@ -53,8 +55,9 @@ class AppleStoreSourceTest {
 
         override fun status(packId: String, callbacks: ApplePackCallbacks) = onStatus(callbacks)
         override fun readBytes(packId: String, path: String): NSData? = data
-        override fun remove(packId: String) {
+        override fun remove(packId: String, callbacks: ApplePackCallbacks) {
             removes++
+            onRemove(callbacks)
         }
     }
 
@@ -145,6 +148,46 @@ class AppleStoreSourceTest {
     @Test
     fun aMissingFileReadsNull() = runTest {
         assertNull(AppleStoreSource(store = FakeStore(), dispatcher = StandardTestDispatcher(testScheduler)).readBytes("p", "a.bin"))
+    }
+
+    // Review finding 3: remove and the corrupt-pack re-fetch were two unordered Swift tasks.
+    @Test
+    fun removeSuspendsUntilTheStoreHasRemovedThePack() = runTest {
+        var pendingRemove: ApplePackCallbacks? = null
+        val store = FakeStore().apply { onRemove = { pendingRemove = it } }
+        val source = AppleStoreSource(store = store, dispatcher = StandardTestDispatcher(testScheduler))
+        val removal = launch { source.remove("p") }
+        runCurrent()
+        assertTrue(removal.isActive, "remove waits for the store")
+        pendingRemove!!.onFinished()
+        runCurrent()
+        assertTrue(removal.isCompleted)
+    }
+
+    // Review finding 10: a collector that starts during a fetch saw nothing until the first byte.
+    @Test
+    fun aCollectorDuringAFetchSeesPending() = runTest {
+        val store = FakeStore().apply { onFetch = { } }
+        val source = AppleStoreSource(store = store, dispatcher = StandardTestDispatcher(testScheduler))
+        val job = launch { source.fetch("p") }
+        runCurrent()
+        assertEquals(PackState.Pending, source.state("p").first())
+        job.cancelAndJoin()
+    }
+
+    // Review finding 8: a progress tick racing the result must never leave the pack Downloading.
+    @Test
+    fun aTickAfterTheResultLeavesTheResult() = runTest {
+        val store = FakeStore().apply { onFetch = { } }
+        val source = AppleStoreSource(store = store, dispatcher = StandardTestDispatcher(testScheduler))
+        val result = async { source.fetch("p") }
+        runCurrent()
+        val callbacks = store.fetched.await()
+        callbacks.onFinished()
+        callbacks.onProgress(9, 10)
+        assertEquals(PackState.Ready, result.await())
+        callbacks.onProgress(10, 10)
+        assertEquals(PackState.Ready, source.state("p").first())
     }
 
     @Test

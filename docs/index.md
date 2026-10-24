@@ -31,7 +31,8 @@ packs.state("postdelivery").collect { state -> showProgress(state) }
 - Two callers fetching the same pack share one store request.
 - Every pack is checked against its `assetdropkit.json` once per version; a changed or missing file removes the pack, fetches it once more, then reports `Failed(Corrupt)`.
 - `readBytes` runs on the dispatcher you inject (default `Dispatchers.Default`), never on the caller's thread.
-- After a relaunch, the first state comes from the store, so a download that was running shows as running.
+- After a relaunch, the first state comes from the store, so a download that was running shows as running; a store's Ready becomes Ready only once the pack matches its manifest.
+- `stallTimeoutMillis` turns a download that stops moving (offline, parked in Pending) into `Failed(NoNetwork)`.
 
 ![The sample on Android after the demo pack arrived](assets/sample-android-ready.png){ width="240" }
 ![The sample on iOS after the demo pack arrived](assets/sample-ios-ready.png){ width="240" }

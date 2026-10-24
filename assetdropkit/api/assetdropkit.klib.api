@@ -33,7 +33,7 @@ abstract interface com.vocabloot.assetdropkit/ApplePackCallbacks { // com.vocabl
 abstract interface com.vocabloot.assetdropkit/ApplePackStore { // com.vocabloot.assetdropkit/ApplePackStore|null[0]
     abstract fun fetch(kotlin/String, com.vocabloot.assetdropkit/ApplePackCallbacks): com.vocabloot.assetdropkit/PackCancel // com.vocabloot.assetdropkit/ApplePackStore.fetch|fetch(kotlin.String;com.vocabloot.assetdropkit.ApplePackCallbacks){}[0]
     abstract fun readBytes(kotlin/String, kotlin/String): platform.Foundation/NSData? // com.vocabloot.assetdropkit/ApplePackStore.readBytes|readBytes(kotlin.String;kotlin.String){}[0]
-    abstract fun remove(kotlin/String) // com.vocabloot.assetdropkit/ApplePackStore.remove|remove(kotlin.String){}[0]
+    abstract fun remove(kotlin/String, com.vocabloot.assetdropkit/ApplePackCallbacks) // com.vocabloot.assetdropkit/ApplePackStore.remove|remove(kotlin.String;com.vocabloot.assetdropkit.ApplePackCallbacks){}[0]
     abstract fun status(kotlin/String, com.vocabloot.assetdropkit/ApplePackCallbacks) // com.vocabloot.assetdropkit/ApplePackStore.status|status(kotlin.String;com.vocabloot.assetdropkit.ApplePackCallbacks){}[0]
 }
 
@@ -51,6 +51,7 @@ abstract interface com.vocabloot.assetdropkit/PackSource { // com.vocabloot.asse
 abstract interface com.vocabloot.assetdropkit/VerifiedMarkers { // com.vocabloot.assetdropkit/VerifiedMarkers|null[0]
     abstract fun isVerified(kotlin/String, kotlin/Int): kotlin/Boolean // com.vocabloot.assetdropkit/VerifiedMarkers.isVerified|isVerified(kotlin.String;kotlin.Int){}[0]
     abstract fun markVerified(kotlin/String, kotlin/Int) // com.vocabloot.assetdropkit/VerifiedMarkers.markVerified|markVerified(kotlin.String;kotlin.Int){}[0]
+    open fun clear(kotlin/String) // com.vocabloot.assetdropkit/VerifiedMarkers.clear|clear(kotlin.String){}[0]
 }
 
 sealed interface com.vocabloot.assetdropkit/PackState { // com.vocabloot.assetdropkit/PackState|null[0]
@@ -133,7 +134,7 @@ final class com.vocabloot.assetdropkit/AppleStoreSource : com.vocabloot.assetdro
 }
 
 final class com.vocabloot.assetdropkit/AssetPacks { // com.vocabloot.assetdropkit/AssetPacks|null[0]
-    constructor <init>(com.vocabloot.assetdropkit/PackSource, kotlinx.coroutines/CoroutineDispatcher = ..., com.vocabloot.assetdropkit/VerifiedMarkers = ...) // com.vocabloot.assetdropkit/AssetPacks.<init>|<init>(com.vocabloot.assetdropkit.PackSource;kotlinx.coroutines.CoroutineDispatcher;com.vocabloot.assetdropkit.VerifiedMarkers){}[0]
+    constructor <init>(com.vocabloot.assetdropkit/PackSource, kotlinx.coroutines/CoroutineDispatcher = ..., com.vocabloot.assetdropkit/VerifiedMarkers = ..., kotlin/Long = ...) // com.vocabloot.assetdropkit/AssetPacks.<init>|<init>(com.vocabloot.assetdropkit.PackSource;kotlinx.coroutines.CoroutineDispatcher;com.vocabloot.assetdropkit.VerifiedMarkers;kotlin.Long){}[0]
 
     final fun state(kotlin/String): kotlinx.coroutines.flow/Flow<com.vocabloot.assetdropkit/PackState> // com.vocabloot.assetdropkit/AssetPacks.state|state(kotlin.String){}[0]
     final suspend fun fetch(kotlin/String): com.vocabloot.assetdropkit/PackState // com.vocabloot.assetdropkit/AssetPacks.fetch|fetch(kotlin.String){}[0]
@@ -144,6 +145,7 @@ final class com.vocabloot.assetdropkit/AssetPacks { // com.vocabloot.assetdropki
 final class com.vocabloot.assetdropkit/InMemoryVerifiedMarkers : com.vocabloot.assetdropkit/VerifiedMarkers { // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers|null[0]
     constructor <init>() // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.<init>|<init>(){}[0]
 
+    final fun clear(kotlin/String) // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.clear|clear(kotlin.String){}[0]
     final fun isVerified(kotlin/String, kotlin/Int): kotlin/Boolean // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.isVerified|isVerified(kotlin.String;kotlin.Int){}[0]
     final fun markVerified(kotlin/String, kotlin/Int) // com.vocabloot.assetdropkit/InMemoryVerifiedMarkers.markVerified|markVerified(kotlin.String;kotlin.Int){}[0]
 }

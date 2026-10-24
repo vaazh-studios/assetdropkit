@@ -142,6 +142,25 @@ final class OnDemandLifecycleTests: XCTestCase {
         XCTAssertTrue(requests.made[0].progress.isCancelled)
     }
 
+    /// Review finding 3: a remove during a download was undone when the download finished.
+    func testRemoveDuringADownloadCancelsItAndHoldsNothing() async throws {
+        let requests = FakeRequests()
+        requests.next = { let r = FakeRequest(tag: $0); r.hang = true; return r }
+        let source = OnDemandResourcesSource(requests: requests)
+        let task = Task { try await source.fetch("p") }
+        while requests.made.first?.begins != 1 { await Task.yield() }
+        await source.remove("p")
+        for _ in 0..<200 where !requests.made[0].progress.isCancelled {
+            try await Task.sleep(nanoseconds: 5_000_000)
+        }
+        XCTAssertTrue(requests.made[0].progress.isCancelled, "the download is cancelled")
+        task.cancel()
+        _ = try? await task.value
+        requests.next = { let r = FakeRequest(tag: $0); r.available = false; return r }
+        let status = await source.status("p")
+        XCTAssertEqual(status, .notDownloaded)
+    }
+
     func testStatusUpdatesReportProgressThenReady() async throws {
         let requests = FakeRequests()
         let source = OnDemandResourcesSource(requests: requests)

@@ -43,12 +43,13 @@ class PlayStateMappingTest {
         assertEquals(PackFailure.Unknown, failure(AssetPackErrorCode.INVALID_REQUEST))
     }
 
-    /** A sideload fails with UNRECOGNIZED_INSTALLATION; Play's confirmation dialog is the way out, never local files. */
+    /**
+     * A sideload's fetch that FAILS with UNRECOGNIZED_INSTALLATION is not something Play's dialog
+     * can resume (it resumes only REQUIRES_USER_CONFIRMATION and WAITING_FOR_WIFI), so it is a
+     * store failure, never local files (review finding 4).
+     */
     @Test
-    fun anUnrecognisedInstallNeedsPlayConfirmation() {
-        assertEquals(
-            PackState.NeedsPlayConfirmation,
-            mapPlayStatus(status = AssetPackStatus.FAILED, errorCode = AssetPackErrorCode.UNRECOGNIZED_INSTALLATION, bytes = 0, total = 0),
-        )
+    fun anUnrecognisedInstallFailureIsStoreUnavailable() {
+        assertEquals(PackFailure.StoreUnavailable, failure(AssetPackErrorCode.UNRECOGNIZED_INSTALLATION))
     }
 }

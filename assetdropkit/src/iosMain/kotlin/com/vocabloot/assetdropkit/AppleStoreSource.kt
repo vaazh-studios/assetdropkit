@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -47,8 +48,12 @@ public class AppleStoreSource(
     override suspend fun fetch(packId: String): PackState {
         val state = flowOf(packId)
         lock.withLock { fetching += packId }
+        state.update { if (it == PackState.Ready) it else PackState.Pending }
         try {
-            return call(onProgress = { state.value = it }) { store.fetch(packId, it) }.also { state.value = it }
+            // A tick racing the result loses: progress never replaces a settled state.
+            val result = call(onProgress = { tick -> state.update { if (it?.isSettled == true) it else tick } }) { store.fetch(packId, it) }
+            state.value = result
+            return result
         } catch (e: CancellationException) {
             state.value = PackState.Failed(PackFailure.Cancelled, null)
             throw e
@@ -61,7 +66,7 @@ public class AppleStoreSource(
         withContext(dispatcher) { store.readBytes(packId, path)?.copyToByteArray() }
 
     override suspend fun remove(packId: String) {
-        withContext(dispatcher) { store.remove(packId) }
+        call { store.remove(packId, it) }
         flowOf(packId).value = PackState.NotDownloaded
     }
 

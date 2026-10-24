@@ -70,9 +70,13 @@ final class AssetDropAdapter: NSObject, ApplePackStore {
         try? packs.contents(packId, path)
     }
 
-    func remove(packId: String) {
+    func remove(packId: String, callbacks: any ApplePackCallbacks) {
+        let callbacks = Unchecked(callbacks)
         let packs = packs
-        Task { await packs.remove(packId) }
+        Task {
+            await packs.remove(packId)
+            callbacks.value.onFinished()
+        }
     }
 
     private static func failure(_ error: Error) -> (reason: PackFailure, detail: String?) {
@@ -87,7 +91,7 @@ final class AssetDropAdapter: NSObject, ApplePackStore {
     }
 }
 
-/// Kotlin objects are not Sendable; each callback object is used by one task at a time.
+/// Kotlin objects are not Sendable; the Kotlin side makes its callbacks safe to call from any thread.
 private struct Unchecked<Value>: @unchecked Sendable {
     let value: Value
     init(_ value: Value) { self.value = value }

@@ -36,5 +36,6 @@ public interface ApplePackStore {
     public fun status(packId: String, callbacks: ApplePackCallbacks)
     /** A file of a ready pack, path inside the pack; null when missing. */
     public fun readBytes(packId: String, path: String): NSData?
-    public fun remove(packId: String)
+    /** Lets the system free the pack; call `onFinished` once it is gone, so a following fetch cannot overtake it. */
+    public fun remove(packId: String, callbacks: ApplePackCallbacks)
 }

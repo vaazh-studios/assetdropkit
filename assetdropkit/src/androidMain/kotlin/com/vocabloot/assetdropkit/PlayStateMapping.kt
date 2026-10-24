@@ -13,9 +13,7 @@ internal fun mapPlayStatus(status: Int, errorCode: Int, bytes: Long, total: Long
     AssetPackStatus.WAITING_FOR_WIFI -> PackState.WaitingForWifi
     AssetPackStatus.REQUIRES_USER_CONFIRMATION -> PackState.NeedsPlayConfirmation
     AssetPackStatus.CANCELED -> PackState.Failed(PackFailure.Cancelled, null)
-    AssetPackStatus.FAILED ->
-        if (errorCode == AssetPackErrorCode.UNRECOGNIZED_INSTALLATION) PackState.NeedsPlayConfirmation
-        else PackState.Failed(playFailure(errorCode), "Play error $errorCode")
+    AssetPackStatus.FAILED -> PackState.Failed(playFailure(errorCode), "Play error $errorCode")
     else -> PackState.Failed(PackFailure.Unknown, "Play status $status")
 }
 
@@ -24,6 +22,7 @@ private fun playFailure(errorCode: Int): PackFailure = when (errorCode) {
     AssetPackErrorCode.INSUFFICIENT_STORAGE -> PackFailure.InsufficientStorage
     AssetPackErrorCode.PACK_UNAVAILABLE, AssetPackErrorCode.DOWNLOAD_NOT_FOUND -> PackFailure.NotFound
     AssetPackErrorCode.APP_UNAVAILABLE, AssetPackErrorCode.APP_NOT_OWNED,
-    AssetPackErrorCode.API_NOT_AVAILABLE, AssetPackErrorCode.ACCESS_DENIED -> PackFailure.StoreUnavailable
+    AssetPackErrorCode.API_NOT_AVAILABLE, AssetPackErrorCode.ACCESS_DENIED,
+    AssetPackErrorCode.UNRECOGNIZED_INSTALLATION -> PackFailure.StoreUnavailable
     else -> PackFailure.Unknown
 }
