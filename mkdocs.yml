@@ -24,8 +24,19 @@ markdown_extensions:
   - attr_list
 nav:
   - Home: index.md
-  - Android: android.md
-  - iOS: ios.md
-  - Packaging: packaging.md
-  - Testing: testing.md
+  - Setup:
+      - Android: setup-android.md
+      - iOS: setup-ios.md
+      - Packaging: packaging.md
+  - Support matrix: support-matrix.md
+  - Guides:
+      - Testing: testing.md
+      - Recipes: recipes.md
+  - FAQ: faq.md
+  - Known issues: known-issues.md
   - Limits: limits.md
+  - Stability and versions: stability.md
+  - Maintainers:
+      - Design: design.md
+      - Publishing: publishing.md
+  - API reference: api/index.html

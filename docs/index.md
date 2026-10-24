@@ -46,4 +46,4 @@ commonTest.dependencies { implementation("com.vocabloot:assetdropkit-test:0.1.0"
 ```
 
 The Apple side is a Swift package: add `https://github.com/vaazh-studios/assetdropkit` in Xcode.
-Then follow [Android](android.md), [iOS](ios.md) and [Packaging](packaging.md).
+Then follow [Android](setup-android.md), [iOS](setup-ios.md) and [Packaging](packaging.md).
