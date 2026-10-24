@@ -1,5 +1,8 @@
 package com.vocabloot.assetdropkit
 
+import kotlin.experimental.ExperimentalObjCName
+import kotlin.native.ObjCName
+
 /** Where a pack stands, as its store reports it. */
 public sealed interface PackState {
     /** Not on the device. [AssetPacks.fetch] downloads it. */
@@ -27,8 +30,17 @@ public sealed interface PackState {
     public data class Failed(val reason: PackFailure, val detail: String?) : PackState
 }
 
-/** Why a fetch failed, the same on every store. */
-public enum class PackFailure { NoNetwork, InsufficientStorage, NotFound, StoreUnavailable, Cancelled, Corrupt, Unknown }
+/** Why a fetch failed, the same on every store. Swift sees camel-case names (`.noNetwork`). */
+@OptIn(ExperimentalObjCName::class)
+public enum class PackFailure {
+    @ObjCName("noNetwork") NoNetwork,
+    @ObjCName("insufficientStorage") InsufficientStorage,
+    @ObjCName("notFound") NotFound,
+    @ObjCName("storeUnavailable") StoreUnavailable,
+    @ObjCName("cancelled") Cancelled,
+    @ObjCName("corrupt") Corrupt,
+    @ObjCName("unknown") Unknown,
+}
 
 /** True for the states [PackSource.fetch] returns on: nothing more happens without the user or a new fetch. */
 public val PackState.isSettled: Boolean

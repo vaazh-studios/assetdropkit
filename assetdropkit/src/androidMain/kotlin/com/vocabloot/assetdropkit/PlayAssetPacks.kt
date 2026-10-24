@@ -7,7 +7,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import java.io.File
 
 /**
@@ -22,8 +24,12 @@ public class PlayAssetPacks internal constructor(private val play: PlayStore) : 
         manager: AssetPackManager = AssetPackManagerFactory.getInstance(context),
     ) : this(ManagerPlayStore(manager))
 
+    /** Packs removed in this process: Play sends no update for a removal, so state collectors hear it here. */
+    private val removed = MutableSharedFlow<String>(extraBufferCapacity = 16)
+
     override fun state(packId: String): Flow<PackState> = callbackFlow {
         val unregister = play.listen { if (it.name == packId) trySend(it.toPackState()) }
+        launch { removed.collect { if (it == packId) send(PackState.NotDownloaded) } }
         send(play.packState(packId)?.toPackState() ?: PackState.Failed(PackFailure.NotFound, "Play does not know pack $packId"))
         awaitClose { unregister() }
     }
@@ -50,6 +56,7 @@ public class PlayAssetPacks internal constructor(private val play: PlayStore) : 
 
     override suspend fun remove(packId: String) {
         play.remove(packId)
+        removed.emit(packId)
     }
 
     private fun PlayPackState.toPackState() = mapPlayStatus(status = status, errorCode = errorCode, bytes = bytes, total = total)

@@ -135,6 +135,20 @@ class PlayAssetPacksTest {
         assertEquals(listOf("p"), play.removed)
     }
 
+    /** Play sends no update when a pack is removed (seen on the emulator); open collectors still hear it. */
+    @Test
+    fun removeReachesOpenStateCollectors() = runTest {
+        val play = FakePlay().apply { current = PlayPackState(name = "p", status = AssetPackStatus.COMPLETED, errorCode = 0, bytes = 0, total = 0) }
+        val packs = PlayAssetPacks(play)
+        val seen = mutableListOf<PackState>()
+        val collector = launch { packs.state("p").collect { seen += it } }
+        runCurrent()
+        packs.remove("p")
+        runCurrent()
+        assertEquals(listOf(PackState.Ready, PackState.NotDownloaded), seen)
+        collector.cancelAndJoin()
+    }
+
     @Test
     fun aReleaseSourceNeverReadsLocalFiles() {
         val local = LocalPacks(root = Path("packs"))
