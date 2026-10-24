@@ -13,3 +13,5 @@ site/
 .swiftpm/
 .build/
 Package.resolved
+sample/packs/*.aar
+__pycache__/
