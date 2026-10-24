@@ -3,7 +3,8 @@ import PackageDescription
 
 let package = Package(
     name: "AssetDropKit",
-    platforms: [.iOS(.v17)],
+    // macOS only so `swift test` runs on the host; the library ships for iOS.
+    platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
         .library(name: "AssetDropKit", targets: ["AssetDropKit"]),
     ],
