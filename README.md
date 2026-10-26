@@ -1,5 +1,7 @@
 # AssetDropKit
 
+![AssetDropKit: game content on first play, delivered by Google Play and the App Store, no server](docs/assets/hero.png)
+
 Built for [Vocabloot](https://vocabloot.com), the photo vocabulary app for iOS and Android. Part of the [Vocabloot open-source libraries](https://vocabloot.com/oss).
 
 Kotlin Multiplatform asset packs, downloaded on first use from the app stores themselves: **Google Play Asset Delivery** on Android, **Apple-hosted Background Assets** on iOS 26 and later, **On-Demand Resources** on iOS 17 and 18. The stores host the bytes. **No server, no hosting bill.**

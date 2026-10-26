@@ -11,6 +11,8 @@ Kotlin Multiplatform asset packs, downloaded on first use from the app stores th
 The stores host the bytes, so there is no server and no hosting bill. Your app keeps its install
 size small and fetches a game's art the first time someone plays it.
 
+![AssetDropKit](assets/hero.png)
+
 ## Quickstart
 
 ```kotlin
