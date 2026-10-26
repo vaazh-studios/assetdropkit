@@ -8,7 +8,7 @@ never calls BackgroundAssets through cinterop.
 
 ```kotlin
 iosTarget.binaries.framework {
-    export("com.vocabloot:assetdropkit:0.1.0")
+    export("com.vocabloot:assetdropkit:0.1.1")
 }
 ```
 

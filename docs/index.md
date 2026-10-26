@@ -43,8 +43,8 @@ packs.state("postdelivery").collect { state -> showProgress(state) }
 
 ```kotlin
 // shared module
-commonMain.dependencies { api("com.vocabloot:assetdropkit:0.1.0") }
-commonTest.dependencies { implementation("com.vocabloot:assetdropkit-test:0.1.0") }
+commonMain.dependencies { api("com.vocabloot:assetdropkit:0.1.1") }
+commonTest.dependencies { implementation("com.vocabloot:assetdropkit-test:0.1.1") }
 ```
 
 The Apple side is a Swift package: add `https://github.com/vaazh-studios/assetdropkit` in Xcode.

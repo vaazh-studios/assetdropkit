@@ -38,7 +38,7 @@ Games make an app big, and most players never open most of them. Shipping every 
 ## AssetDropKit 101
 
 ```kotlin
-// libs.versions.toml            assetdropkit = { module = "com.vocabloot:assetdropkit", version = "0.1.0" }
+// libs.versions.toml            assetdropkit = { module = "com.vocabloot:assetdropkit", version = "0.1.1" }
 // build.gradle.kts (shared)     commonMain.dependencies { api(libs.assetdropkit) }
 ```
 
