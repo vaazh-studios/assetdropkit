@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Fixed: `AssetPacks.state()` asked the store for a pack's first state on the collector's thread. On Android that is a Play binder call (a disk read with Play's local-testing service), often on the main thread; the whole state flow now runs on the `AssetPacks` dispatcher.
+
 ## 0.1.0 (2026-10-25)
 
 First release.

@@ -14,6 +14,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
@@ -46,12 +47,14 @@ public class AssetPacks(
     /**
      * The pack's state; the first value is read from the store, never assumed. A store's Ready
      * becomes Ready here only once the pack matches its manifest (otherwise `Failed(Corrupt)`), so
-     * a UI keyed on Ready never reads an unverified pack.
+     * a UI keyed on Ready never reads an unverified pack. The store is asked and the pack checked
+     * on [dispatcher], so a collector on the main thread never waits on Play or the disk.
      */
     public fun state(packId: String): Flow<PackState> = source.state(packId)
         .distinctUntilChanged()
-        .map { state -> if (state == PackState.Ready) withContext(dispatcher) { verified(packId) } else state }
+        .map { state -> if (state == PackState.Ready) verified(packId) else state }
         .distinctUntilChanged()
+        .flowOn(dispatcher)
 
     /**
      * Downloads the pack if needed and verifies it. Suspends until Ready, Failed, WaitingForWifi
